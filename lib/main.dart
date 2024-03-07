@@ -36,7 +36,7 @@ class _imagepickerState extends State<imagepicker> {
         children: [
           Container(
               height: 550,
-              color: Colors.blueAccent,
+              color: Colors.deepPurple[100],
               child: _selectedImage != null?Image.file(_selectedImage!)
                   :const Center(child: Text("please select the image"))),
           const Divider(),
