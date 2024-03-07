@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -13,7 +12,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: imagepicker(),
     );
@@ -39,8 +38,8 @@ class _imagepickerState extends State<imagepicker> {
               height: 550,
               color: Colors.blueAccent,
               child: _selectedImage != null?Image.file(_selectedImage!)
-                  :Center(child: const Text("please select the image"))),
-          Divider(),
+                  :const Center(child: Text("please select the image"))),
+          const Divider(),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -48,16 +47,16 @@ class _imagepickerState extends State<imagepicker> {
                 onPressed: () {
                   _pickImageFromCamera();
                 },
-                child: Icon(Icons.camera),
+                child: const Icon(Icons.camera),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 20,
               ),
               FloatingActionButton(
                 onPressed: () {
                   _pickImageFromGallery();
                 },
-                child: Icon(Icons.photo_library),
+                child: const Icon(Icons.photo_library),
               ),
             ],
           ),
