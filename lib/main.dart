@@ -1,6 +1,9 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:imagepickerwidget/image_picker_controller.dart';
 
 void main() {
   runApp(const MyApp());
@@ -27,59 +30,54 @@ class imagepicker extends StatefulWidget {
 }
 
 class _imagepickerState extends State<imagepicker> {
-  File? _selectedImage;
+  ImagePickerController controller = Get.put(ImagePickerController());
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [
-          Container(
+          Obx(
+            () => Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                    image:
+                        FileImage(File(controller.imagepath.value.toString())),
+                    fit: BoxFit.cover),
+              ),
               height: 550,
-              color: Colors.deepPurple[100],
-              child: _selectedImage != null?Image.file(_selectedImage!)
-                  :const Center(child: Text("please select the image"))),
-          const Divider(),
+              width: MediaQuery.of(context).size.width,
+            ),
+          ),
+          Divider(),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               FloatingActionButton(
                 onPressed: () {
-                  _pickImageFromCamera();
+                  controller.pickImageFromCamera();
                 },
-                child: const Icon(Icons.camera),
+                child: Icon(Icons.camera),
               ),
-              const SizedBox(
+              SizedBox(
                 width: 20,
               ),
               FloatingActionButton(
                 onPressed: () {
-                  _pickImageFromGallery();
+                  controller.pickImageFromGallery();
                 },
-                child: const Icon(Icons.photo_library),
+                child: Icon(Icons.photo_library),
               ),
             ],
           ),
         ],
       ),
     );
-  }
-
-  Future _pickImageFromGallery() async {
-    final returnImage =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
-
-    setState(() {
-      _selectedImage = File(returnImage!.path);
-    });
-  }
-
-  Future _pickImageFromCamera() async {
-    final returnImage =
-        await ImagePicker().pickImage(source: ImageSource.camera);
-
-    setState(() {
-      _selectedImage = File(returnImage!.path);
-    });
   }
 }
