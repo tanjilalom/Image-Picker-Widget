@@ -18,7 +18,7 @@ class ImagePickerController extends GetxController {
   Future pickImageFromGallery() async {
     final ImagePicker _imagepicker = ImagePicker();
     final returnImage =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
+        await _imagepicker.pickImage(source: ImageSource.gallery);
 
     if (returnImage != null) {
       imagepath.value = returnImage.path.toString();
